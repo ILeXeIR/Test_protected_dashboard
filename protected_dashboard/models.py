@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import CustomUser
 
 # Create your models here.
 class Result(models.Model):
@@ -7,7 +7,7 @@ class Result(models.Model):
 	title = models.CharField(max_length=50)
 	score = models.IntegerField()
 	max_score = models.IntegerField()
-	student = models.ForeignKey(User, on_delete=models.CASCADE)
+	student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
 def __str__(self):
 	return self.title
