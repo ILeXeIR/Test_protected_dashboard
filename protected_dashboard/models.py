@@ -7,6 +7,7 @@ class Result(models.Model):
 	title = models.CharField(max_length=50)
 	score = models.IntegerField()
 	max_score = models.IntegerField()
+	is_passed = models.BooleanField()
 	student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
 def __str__(self):

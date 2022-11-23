@@ -1,7 +1,23 @@
-<p>Protected Dashboard</p>
+<h3>Protected Dashboard</h3>
 {% if user.is_authenticated %}
   <p>Hello, {{ user.username }}</p>
   <a href="{% url 'users:logout' %}">Log out</a>
 {% else %}
   <a href="{% url 'users:login' %}">Log in</a>
 {% endif %}
+<ul>
+  {% for result in results %}
+    <li>
+      <h4>{{ result.title }} results</h4>
+      <p>Your score is</p>
+      <p>{{ result.score }} of {{ result.max_score }}</p>
+      {% if result.is_passed %}
+        <p>PASSED</p>
+      {% else %}
+        <p>FAILED</p>
+      {% endif %}
+    </li>
+  {% empty %}
+    <li><p>There are no results yet.</p></li>
+  {% endfor %}
+</ul>
