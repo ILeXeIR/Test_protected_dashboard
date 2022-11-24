@@ -1,8 +1,21 @@
-<form action="{% url 'users:register' %}" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button name="submit">Register</button>
-  <input type="hidden" name="next"
-    value="{% url 'protected_dashboard:index' %}" />
-</form>
+{% extends "protected_dashboard/base.html" %}
+{% load bootstrap5 %}
+{% load static %}
 
+{% block content %}
+<div class="login_form container">
+  <div class="circle">
+    <img src="{% static 'protected_dashboard/img/logo1.svg' %}">
+  </div>
+  <h3 class="text-center">Registration</h3>
+  <form method="post" action="{% url 'users:login' %}" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form show_label=False %}
+    {% buttons %}
+      <button name="submit" class="btn btn-primary mt-2 w-100">Register</button>
+    {% endbuttons %}
+    <input type="hidden" name="next"
+      value="{% url 'protected_dashboard:index' %}" />
+  </form>
+</div>
+{% endblock content %}

@@ -1,23 +1,56 @@
-<h3>Protected Dashboard</h3>
-{% if user.is_authenticated %}
-  <p>Hello, {{ user.username }}</p>
-  <a href="{% url 'users:logout' %}">Log out</a>
-{% else %}
-  <a href="{% url 'users:login' %}">Log in</a>
-{% endif %}
-<ul>
+{% extends "protected_dashboard/base.html" %}
+{% load bootstrap5 %}
+{% load static %}
+
+{% block content %}
+<nav class="navbar navbar-dark bg-primary">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+    	data-bs-target="#navbarToggler" aria-controls="navbarToggler" 
+    	aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Dashboard</a>
+    <div class="collapse navbar-collapse" id="navbarToggler">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      	<li class="nav-item">
+      	  <span class="navbar-text">Hello, <b>{{ user.username }}</b></span>
+      	</li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/logout/">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main">
+<ul class="results">
   {% for result in results %}
     <li>
-      <h4>{{ result.title }} results</h4>
-      <p>Your score is</p>
-      <p>{{ result.score }} of {{ result.max_score }}</p>
-      {% if result.is_passed %}
-        <p>PASSED</p>
-      {% else %}
-        <p>FAILED</p>
-      {% endif %}
-    </li>
+	  <div class="card shadow-sm" style="width: 18rem;">
+	    <div class="card-body">
+	      <h5 class="card-title font-weight-bold text-primary">{{ result.title }} results</h5>
+	      <p class="card-subtitle mb-2 text-muted">Your score is</p>
+	      <h4 class="card-text">{{ result.score }} of {{ result.max_score }}</h4>
+	      {% if result.is_passed %}
+            <p class="card-subtitle mb-2 text-muted">PASSED</p>
+          {% else %}
+            <p class="card-subtitle mb-2 text-muted">FAILED</p>
+          {% endif %}
+	    </div>
+	  </div>
+	</li>
   {% empty %}
-    <li><p>There are no results yet.</p></li>
+    <li>
+      <div class="card" style="width: 18rem;">
+	    <div class="card-body">
+	      <h5 class="card-title">There are no results yet.</h5>
+	    </div>
+	  </div>
+    </li>
   {% endfor %}
 </ul>
+</div>
+{% endblock content %}
+
